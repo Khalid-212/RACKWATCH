@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import {GoogleAuthProvider, getAuth ,signInWithPopup} from 'firebase/auth';
-// import { useNavigate } from "react-router-dom";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -18,10 +17,13 @@ const firebaseConfig = {
     const provider = new GoogleAuthProvider();
     
     export const signInWithGoogle = () => {
-    //    const navigate = useNavigate();
         signInWithPopup(auth, provider).then((result) => {
-            localStorage.setItem('user', JSON.stringify(result.user))
-        // navigate("/admin/home");
+            console.log(result)
+            const user = result.user;
+            localStorage.setItem('name', user.displayName)
+            localStorage.setItem('email', user.email)
+            localStorage.setItem('photo', user.photoURL)
+            window.location.href = "/dashboard";
         }).catch((error) => {
             console.log(error.message)
         })
