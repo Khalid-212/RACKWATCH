@@ -1,0 +1,22 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.bannerImg{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #000000;
+    margin: 0px;
+}
+.headline{
+    font: 1em sans-serif;
+    font-weight: bold;
+    color: #D61D1E;
+    text-align: center;
+    margin: -80px;
+}
+.headline p{
+    color: #000000;
+}
