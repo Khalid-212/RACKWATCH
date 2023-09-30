@@ -1,0 +1,23 @@
+.card{
+    width: 300px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.card:hover{
+    transform: scale(1.05);
+}
+.value{
+    font-size: 64px;
+    font-weight: bold;;
+}
+.key{
+    font-size: 24px;
+    color: red;
+}
