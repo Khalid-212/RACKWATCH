@@ -5,8 +5,9 @@ import avatar from "../../assets/avatar.png";
 import { Link } from 'react-router-dom';
 
 function Header() {
-  const user = localStorage.getItem('user');
-  console.log(JSON.parse(user))
+  const userImg = localStorage.getItem("photo");
+  console.log('userImg', userImg)
+  const userName = localStorage.getItem("name");
   return (
     <div className='header'>
             <Link to="/home" style={{ textDecoration: "none" }}>
@@ -14,10 +15,13 @@ function Header() {
         <img src={logo} alt="logo" />
       </div>
         </Link>
+        <div className="flex">
+
       <div className="avatar">
-        <img src={avatar} alt="user" />
-        <p>{user.displayName}</p>
+        <img src={userImg} alt="user" />
+        <p>{userName}</p>
       </div>
+        </div>
     </div>
   )
 }

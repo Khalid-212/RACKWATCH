@@ -7,22 +7,29 @@
     border-bottom: 5px solid #D61D1E;
 }
 .logo{
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: flex-start;
 }
 .logo img{
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     margin: auto 20px;
 }
 .avatar{
     width: 100%;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    /* border: 1px solid #D61D1E; */
+}
+.avatar p{
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #D61D1E;
 }
 .avatar img{
     width: 50px;
@@ -32,4 +39,8 @@
     border-radius: 50%;
     margin: auto 20px;
     border: 1px solid #D61D1E;
+}
+.flex{
+    display: flex;
+    margin: 10px;
 }

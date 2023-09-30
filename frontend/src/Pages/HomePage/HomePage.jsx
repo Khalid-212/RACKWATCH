@@ -2,16 +2,8 @@ import React from 'react'
 import "./HomePage.css";
 import logo from "../../assets/logo.png";
 import {signInWithGoogle} from '../../Firebase'
-import {  useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  const navigate = useNavigate();
-  const signin = () => {
-    signInWithGoogle().then((res) => {
-      console.log(res);
-      navigate("/dashboard");
-    });
-  }
 
   return (
     <div>
@@ -27,7 +19,7 @@ export default function HomePage() {
         <br />
         <br />
         <button className="googleSignin" onClick={
-          signin
+          signInWithGoogle
         }>
         <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="" />
         <p>Sign in with Google</p>
