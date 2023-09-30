@@ -1,17 +1,19 @@
-
-import React from 'react'
+import React from "react";
 import "./Card.css";
 
-function Card({value, key,color}) {
+function Card({ value, attribute, color }) {
   return (
-    <div className='card' style={{
-      border: `5px solid ${color}`,
-      color: `${color}`
-    }}>
+    <div
+      className="card"
+      style={{
+        border: `5px solid ${color}`,
+        color: `${color}`,
+      }}
+    >
       <div className="value">{value}</div>
-      <div className="key">{"key"}</div>
+      <div className="attribute">{attribute}</div>
     </div>
-  )
+  );
 }
 
-export default Card
+export default Card;

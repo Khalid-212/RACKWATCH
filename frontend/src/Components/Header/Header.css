@@ -22,6 +22,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex-direction: column;
 }
 .avatar img{
     width: 50px;
@@ -30,4 +31,5 @@
     max-height: 100px;
     border-radius: 50%;
     margin: auto 20px;
+    border: 1px solid #D61D1E;
 }
