@@ -11,8 +11,6 @@ export default function HomePage() {
         <img src={logo} alt="" />
         </div>
         <div className="headline">
-      <h1>Servers should never be down</h1>
-      <p>and we make sure that won’t happen</p>
         </div>
         {/* google signin */}
         <br />

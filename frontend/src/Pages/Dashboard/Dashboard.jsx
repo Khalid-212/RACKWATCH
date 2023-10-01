@@ -18,9 +18,9 @@ function Dashboard() {
       <Header/>
       <div className="cards">
         <div className="cards">
-        <Card value="100" attribute="endpoints" color="gray" />
-        <Card value="100" attribute="Active" color="green" />
-        <Card value="100" attribute="Down" color="red" />
+        <Card value="0" attribute="Monitors" color="gray" />
+        <Card value="0" attribute="Active" color="green" />
+        <Card value="0" attribute="Down" color="red" />
         </div>
         </div>
         <button className="btnAdd" onClick={togglePopUp}>
@@ -32,17 +32,21 @@ function Dashboard() {
             <button className='closebtn' onClick={
               togglePopUp
             }>X</button>
-            {/* Add your pop-up content here */}
+            <div className='popUpWindow'>
             <h2>Add New Endpoint</h2>
-            {/* Add form or other content for adding an endpoint */}
             <form className='form'>
               <label htmlFor="name">Name</label>
               <input type="text" id="name" name="name" />
               <label htmlFor="url">URL</label>
               <input type="text" id="url" name="url" />
-              <label htmlFor="interval">Interval</label>
+              <label htmlFor="interval">Frequency (in minutes)</label>
               <input type="text" id="interval" name="interval" />
-              <label htmlFor="type">Type</label>
+              <label htmlFor="type">Method</label>
+              <select id="type" name="type">
+                <option value="REST">GET</option>
+                <option value="SOAP">POST</option>
+                </select>
+              <label htmlFor="type">Protocol</label>
               <select id="type" name="type">
                 <option value="REST">REST</option>
                 <option value="SOAP">SOAP</option>
@@ -52,6 +56,7 @@ function Dashboard() {
               Submit
             </button>
             </form>
+            </div>
           </div>
         </div>
       )}

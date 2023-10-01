@@ -23,6 +23,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font: 1.2em "Fira Sans", sans-serif;
     /* border: 1px solid #D61D1E; */
 }
 .avatar p{
