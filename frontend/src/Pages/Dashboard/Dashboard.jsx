@@ -79,9 +79,9 @@ function Dashboard() {
       <Header />
       <div className="cards">
         <div className="cards">
-          <Card value="100" attribute="endpoints" color="gray" />
-          <Card value="100" attribute="Active" color="green" />
-          <Card value="100" attribute="Down" color="red" />
+          <Card value="1" attribute="Endpoints" color="gray" />
+          <Card value="1" attribute="Active" color="green" />
+          <Card value="0" attribute="Down" color="red" />
         </div>
       </div>
       <button className="btnAdd" onClick={togglePopUp}>
@@ -184,7 +184,6 @@ function Dashboard() {
 
       {requestData.length > 1 ? (
         <div className="dataDisplayContainer">
-          {/* here */}
           <div className="graph">
             <ChartComponent
               timestamps={requestData.map((item) => item.timestamp)}
@@ -200,6 +199,7 @@ function Dashboard() {
                 {requestData.length === 0 ? (
                   <p>No data available.</p>
                 ) : (
+                  <div className="tableWrapper">
                   <table className="table">
                     <thead className="tableHeader">
                       <tr>
@@ -231,6 +231,7 @@ function Dashboard() {
                         ))}
                     </tbody>
                   </table>
+                  </div>
                 )}
               </>
             )}
