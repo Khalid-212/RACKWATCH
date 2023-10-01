@@ -114,6 +114,7 @@
   overflow: scroll;
   white-space: nowrap;
   padding: 1rem 2rem;
+  box-shadow: none;
 }
 .table{
   background-color: #FBFBFB;

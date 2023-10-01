@@ -5,6 +5,7 @@ import "./Dashboard.css";
 import { db } from "../../Firebase";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import ChartComponent from "../../Components/Chart/ChartComponent";
+import nodata from "../../assets/nodata.svg";
 
 function Dashboard() {
   const [isPopUpOpen, setPopUpOpen] = useState(false);
@@ -13,42 +14,53 @@ function Dashboard() {
     name: "",
     url: "",
     interval: "",
-    type: "REST",
+    protocol: "REST",
+    method: "GET",
   });
   const [requestData, setRequestData] = useState([]);
-  const [graphData, setGraphData] = useState([]);
   const [selectedEndpoint, setSelectedEndpoint] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  useEffect(() => {
-    // Fetch and update the list of endpoints when the component mounts
-    fetchendpoints();
-    // Start periodic requests
-    const intervalId = setInterval(fetchendpoints, newEndpoint.interval); // 20 seconds
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
-    // fetchdata();
-  }, []);
 
   const togglePopUp = () => {
     setPopUpOpen(!isPopUpOpen);
   };
 
+  // add new endpoint to the local storage
   const addEndpoint = async (e) => {
     e.preventDefault();
-    // Add the new endpoint to the list of endpoints
-    console.log(newEndpoint);
+    const endpoint = {
+      name: newEndpoint.name,
+      url: newEndpoint.url,
+      interval: newEndpoint.interval,
+      method: newEndpoint.method,
+      protocol: newEndpoint.protocol,
+    };
+    const data = localStorage.getItem("endpoints");
+    if (data) {
+      const endpoints = JSON.parse(data);
+      endpoints.push(endpoint);
+      localStorage.setItem("endpoints", JSON.stringify(endpoints));
+    } else {
+      localStorage.setItem("endpoints", JSON.stringify([endpoint]));
+    }
+    setNewEndpoint({
+      name: "",
+      url: "",
+      interval: "",
+      method: "GET",
+      protocol: "REST",
+    });
     togglePopUp();
   };
 
-  const fetchendpoints = async () => {};
+  const url = "http://127.0.0.1:5000/records";
+  const endpointLists = JSON.parse(localStorage.getItem("endpoints"));
+  console.log(endpointLists);
 
   const handleEndpointSelection = async (e) => {
     const selected = e.target.value;
     setSelectedEndpoint(selected);
   };
-
-  const url = "http://127.0.0.1:5000/records";
 
   useEffect(() => {
     fetch(url).then((res) => {
@@ -97,16 +109,42 @@ function Dashboard() {
                 />
                 {/* Other input fields (url, interval, type) */}
                 <label htmlFor="url">URL</label>
-                <input type="text" id="url" name="url" />
+                <input
+                  type="text"
+                  value={newEndpoint.url}
+                  id="url"
+                  name="url"
+                  onChange={
+                    (e) =>
+                      setNewEndpoint({ ...newEndpoint, url: e.target.value })
+                  }
+                />
                 <label htmlFor="interval">Frequency (in minutes)</label>
-                <input type="text" id="interval" name="interval" />
-                <label htmlFor="type">Method</label>
-                <select id="type" name="type">
-                  <option value="REST">GET</option>
-                  <option value="SOAP">POST</option>
+                <input
+                  type="text"
+                  id="interval"
+                  value={newEndpoint.interval}
+                  name="interval"
+                  onChange={(e) =>
+                    setNewEndpoint({ ...newEndpoint, interval: e.target.value })
+                  }
+                />
+                <label htmlFor="method">Method</label>
+                <select
+                onChange={(e) =>
+                  setNewEndpoint({ ...newEndpoint, method: e.target.value })
+                }
+                
+                 id="method" value={newEndpoint.method} name="method">
+                  <option value="GET">GET</option>
+                  <option value="POST">POST</option>
                 </select>
-                <label htmlFor="type">Protocol</label>
-                <select id="type" name="type">
+                <label htmlFor="protocol">Protocol</label>
+                <select 
+                onChange={(e) =>
+                  setNewEndpoint({ ...newEndpoint, protocol: e.target.value })
+                }
+                 id="protocol" value={newEndpoint.type} name="protocol">
                   <option value="REST">REST</option>
                   <option value="SOAP">SOAP</option>
                   <option value="GraphQL">GraphQL</option>
@@ -123,81 +161,95 @@ function Dashboard() {
           </div>
         </div>
       )}
-
-      {/* Select available endpoints from local storage */}
-      <div className="endpoint-list">
-        <h2>Available Endpoints</h2>
-        <select
-          id="select-endpoint"
-          name="select-endpoint"
-          value={selectedEndpoint}
-          onChange={handleEndpointSelection}
-        >
-          <option value="">Select an Endpoint</option>
-          {endpoints.map((endpoint, index) => (
-            <option key={index} value={endpoint.url}>
-              {endpoint.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Display the table of request data */}
-      {/* Display the table of request data */}
-      <div className="dataDisplayContainer">
-        {/* here */}
-        <div className="graph">
-          <ChartComponent
-            timestamps={requestData.map((item) => item.timestamp)}
-            responseTimes={requestData.map((item) => item.ping)}
-          />
-        </div>
+      {requestData.length > 1 ? (
         <div className="endpoint-list">
-          <h2>Endpoint Status</h2>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              {requestData.length === 0 ? (
-                <p>No data available.</p>
-              ) : (
-                <table>
-                  <thead className="tableHeader">
-                    <tr>
-                      <th>URL</th>
-                      <th>Status</th>
-                      <th>Timestamp</th>
-                      <th>Response Time (ms)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {requestData
-                      .filter((data) => data.url === selectedEndpoint.url)
-                      .map((data, index) => (
-                        <tr className="table" key={index}>
-                          <td className="table_item shorten">{url}</td>
-                          <td className="table_item"
-                            style={{
-                              color:
-                                data.response === 200 ? "green" : "red",
-                            }}
-                          >{data.response}</td>
-                          <td className="table_item shorten">
-                            {data.timestamp}
-                          </td>
-                          <td className="table_item">{data.ping}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              )}
-            </>
-          )}
+          <h2>Available Endpoints</h2>
+          <select
+            id="select-endpoint"
+            name="select-endpoint"
+            value={selectedEndpoint}
+            onChange={handleEndpointSelection}
+          >
+            <option value="">Select an Endpoint</option>
+            {endpoints.map((endpoint, index) => (
+              <option key={index} value={endpoint.url}>
+                {endpoint.name}
+              </option>
+            ))}
+          </select>
         </div>
+      ) : (
+        " "
+      )}
 
-        {/* Display the simple graph */}
-
-      </div>
+      {requestData.length > 1 ? (
+        <div className="dataDisplayContainer">
+          {/* here */}
+          <div className="graph">
+            <ChartComponent
+              timestamps={requestData.map((item) => item.timestamp)}
+              responseTimes={requestData.map((item) => item.ping)}
+            />
+          </div>
+          <div className="endpoint-list">
+            <h2>Endpoint Status</h2>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                {requestData.length === 0 ? (
+                  <p>No data available.</p>
+                ) : (
+                  <table className="table">
+                    <thead className="tableHeader">
+                      <tr>
+                        <th>URL</th>
+                        <th>Status</th>
+                        <th>Timestamp</th>
+                        <th>Response Time (ms)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {requestData
+                        .filter((data) => data.url === selectedEndpoint.url)
+                        .map((data, index) => (
+                          <tr key={index}>
+                            <td className="table_item shorten">{url}</td>
+                            <td
+                              className="table_item"
+                              style={{
+                                color: data.response === 200 ? "green" : "red",
+                              }}
+                            >
+                              {data.response}
+                            </td>
+                            <td className="table_item shorten">
+                              {data.timestamp}
+                            </td>
+                            <td className="table_item">{data.ping}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      ) : (
+        <img
+          src={nodata}
+          style={{
+            width: "400px",
+            height: "400px",
+            objectFit: "contain",
+            display: "grid",
+            placeItems: "center",
+            margin: "auto",
+          }}
+          alt=""
+        />
+      )}
     </div>
   );
 }
