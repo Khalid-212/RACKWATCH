@@ -1,7 +1,9 @@
 # RACKWATCH
-With RackTime we can monitor the uptime and performance of an API and notify the development teams for any failures instantaneously via popular text messaging apps (e.g Telegram) and project managing apps (e.g Jira).
+With RackTime we can monitor the uptime and performance of an API and notify the development teams for any failures instantaneously via popular text messaging apps (e.g Telegram) and project managing apps (e.g Jira). This project was made at an open source hackfest hackathon conducted by Major League Hacking (MLH).
 <br> <br>
 Demo Link: https://www.youtube.com/watch?v=F3u8z3nyu24
+<br>
+Submission Link: https://devpost.com/software/rackwatch
 
 To install RackWatch follow the simple steps:
 <br>
