@@ -6,7 +6,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 function App() {
   // get the user from localstorage
   const user = localStorage.getItem('name');
-  console.log(JSON.parse(JSON.stringify(user)))
+  // console.log(JSON.parse(JSON.stringify(user)))
 
   return (
     <div className="App">

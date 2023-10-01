@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   const userImg = localStorage.getItem("photo");
-  console.log('userImg', userImg)
+  // console.log('userImg', userImg)
   const userName = localStorage.getItem("name");
   return (
     <div className='header'>
