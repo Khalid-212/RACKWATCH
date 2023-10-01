@@ -25,3 +25,19 @@ npm start
 
 ### Add Monitor Page
 <img align="center" alt="Dashboard" src="https://github.com/Khalid-212/RACKWATCH/blob/main/images/Screenshot 2023-10-01 at 5.23.44 PM.png">
+
+### Usage
+
+Sign up for an account or log in if you already have one.
+
+Add APIs to monitor by providing their details, including name, URL, monitoring interval, and alert settings.
+
+Monitor the status of added APIs on the dashboard.
+
+Receive real-time notifications when issues occur.
+
+### Contributing
+Contributions are welcome! Please follow the contributing guidelines in this repository.
+
+### License
+This project is licensed under the MIT License.
