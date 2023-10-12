@@ -8,8 +8,12 @@ CORS(app)  # This will enable CORS for the entire app
 def hello():
     return "Hello World!"
 
+fl = open('backend/data.json','r')
+json_data = json.load(fl)
+
 @app.route("/records")
 def records():
+
     ls = [{
         "ping": 5312,
         "response": 200,
@@ -220,7 +224,7 @@ def records():
         "response": 200,
         "timestamp": "2023-10-01 10:30:00"
     }]
-    return ls
+    return json_data['data']
 
 @app.route("/data")
 def data():
