@@ -1,6 +1,6 @@
 import React from 'react'
 import "./HomePage.css";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 import {signInWithGoogle} from '../../Firebase'
 
 export default function HomePage() {
@@ -19,7 +19,7 @@ export default function HomePage() {
         <button className="googleSignin" onClick={
           signInWithGoogle
         }>
-        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="" />
+        <img src="https://img.icons8.com/color/48/000000/google-logo.svg" alt="" />
         <p>Sign in with Google</p>
         </button>
     </div>
