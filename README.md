@@ -1,6 +1,6 @@
 # RACKWATCH
 
-<img align="center" alt="Login Page" src="https://github.com/Khalid-212/RACKWATCH/blob/main/frontend/src/assets/logo.png">
+<img align="center" alt="Login Page" src="https://github.com/Khalid-212/RACKWATCH/blob/main/frontend/src/assets/logo.svg">
 
 With RackWatch we can monitor the uptime and performance of an API and notify the development teams for any failures instantaneously via popular text messaging apps (e.g Telegram) and project managing apps (e.g Jira). This project was made at an open source hackfest hackathon conducted by Major League Hacking (MLH).
 <br> <br>
