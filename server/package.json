@@ -1,0 +1,19 @@
+{
+  "name": "rackwatch",
+  "version": "1.0.0",
+  "description": "api monitoring tool",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pg": "^8.7.1",
+    "twilio": "^3.72.0"
+  }
+}
