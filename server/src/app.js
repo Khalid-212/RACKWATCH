@@ -1,34 +1,27 @@
 // src/app.js
+require("dotenv").config();
+// src/app.js
 const express = require("express");
 const bodyParser = require("body-parser");
-const { fetchAndSaveData } = require("./controllers/apiController");
-const { Pool } = require('pg');
+const { fetchAndSaveData, checkApiHealth } = require("./controllers/apiController");
+const { Pool } = require("pg");
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 
-app.get("/fetch-and-save-data", fetchAndSaveData);
+// Run the fetchAndSaveData function at the start of the server
+fetchAndSaveData();
 
- const pool = new Pool({
-  user: "avnadmin",
-  host: "pg-1b26674e-khalidtech-b218.aivencloud.com",
-  database: "defaultdb",
-  password: "AVNS_JuNydJMlaLBNqWsNqWf",
-  port: 19306,
-});
+// Run health checks every 5 minutes (300,000 milliseconds)
+const healthCheckInterval = 3000;
+setInterval(checkApiHealth, healthCheckInterval);
 
 app.get("/", (req, res) => {
-  pool.query("SELECT * FROM api_responses", (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
-    } else {
-      res.json(result.rows);
-    }
-  });
+  res.send("Server is running.");
 });
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

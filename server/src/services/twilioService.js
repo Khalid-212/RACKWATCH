@@ -1,8 +1,9 @@
 // src/services/twilioService.js
+require("dotenv").config();
 const { Twilio } = require("twilio");
 
-const accountSid = "AC448b63f1aa68c1c73a1f42e72ae8edb3";
-const authToken = "5a7343fe11fad462f8cd71e1070e3311";
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioClient = new Twilio(accountSid, authToken);
 const twilioPhoneNumber = "+17277776495";
 const recipientPhoneNumber = "+251985216795";
@@ -13,6 +14,7 @@ function sendErrorMessage(message) {
     from: twilioPhoneNumber,
     to: recipientPhoneNumber,
   });
+  console.log("Message sent.")
 }
 
 module.exports = { sendErrorMessage };
