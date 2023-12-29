@@ -7,7 +7,7 @@ With RackWatch we can monitor the uptime and performance of an API and notify th
 <br> <br>
 Demo Link: https://www.youtube.com/watch?v=F3u8z3nyu24
 <br>
-@@ -36,8 +39,80 @@ Monitor the status of added APIs on the dashboard.
+Monitor the status of added APIs on the dashboard.
 
 Receive real-time notifications when issues occur.
 
