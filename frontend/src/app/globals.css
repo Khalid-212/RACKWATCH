@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.hero_magicText__g6a0K {
+  --purple: #646cc1;
+  --violet: #2230c8;
+  --pink: #7278b6;
+  -webkit-text-fill-color: transparent;
+  animation: hero_background-pan__16WDM 3s linear infinite;
+  background: linear-gradient(to right, var(--purple), var(--violet), var(--pink), var(--purple));
+  -webkit-background-clip: text;
+  background-size: 200%;
+  white-space: nowrap;
+}
+
+@keyframes hero_background-pan__16WDM {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  
+}
+
+.btn-home{
+  width: max-content!important;
+  padding: 1rem 4rem!important;
+  margin: auto;
+  margin-top: 2rem;
+}
+.btn-wrapper{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #1B1917;
+  border-radius: 10px 10px 0px 0px;
+  width: 100%;
+  padding: 1rem 2rem;
+  margin-top: 5rem;
+  border: .5px solid #302e2c;
+}
+.modalWrapper{
+  position: absolute;
+  width: max-content;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
