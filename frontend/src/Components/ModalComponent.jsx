@@ -28,7 +28,7 @@ function ModalComponent() {
 
       // Check if the response status is OK (200)
       if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
+        throw new Error(`HTTP error! Status is: ${res.status}`);
       }
 
       // Check if the response content type is JSON
