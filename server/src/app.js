@@ -17,6 +17,7 @@ const {
   getApiListforUser,
   getAllApis,
   userExists,
+  getApiResponses,
 } = require("./db/postgres");
 const { addApiToDatabase } = require("./db/postgres");
 
@@ -29,7 +30,7 @@ app.use(cors());
 checkApiHealth();
 
 // Run health checks every 5 minutes (300,000 milliseconds)
-const healthCheckInterval = 3000;
+const healthCheckInterval = 300000;
 setInterval(checkApiHealth, healthCheckInterval);
 
 app.get("/", (req, res) => {
@@ -45,7 +46,7 @@ app.post("/user", async (req, res) => {
 });
 
 // add api to list
-app.post("/api", async (req, res) => {
+app.post("/add-api", async (req, res) => {
   const { api, api_name, email } = req.body;
   const datatosave = {
     api: api,
@@ -66,7 +67,6 @@ app.get("/apis", async (req, res) => {
   res.json(apis);
 });
 
-
 app.get("/getallapis", async (req, res) => {
   const apis = await getAllApis();
   res.json(apis);
@@ -75,3 +75,18 @@ app.get("/getallapis", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+app.get("/all-responses", async (req, res) => {
+  const apiResponses = await getApiResponses();
+  res.json(apiResponses);
+});
+
+app.get("/api-responses", async (req, res) => {
+  const { email } = req.body; // Use req.query to get data from query parameters
+  const data = {
+    email: email,
+  };
+  const apiResponses = await getApiResponsesforUser(data);
+  res.json(apiResponses);
+});
+app.get("all-api-responses", async (req, res) => {});
