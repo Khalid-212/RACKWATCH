@@ -1,13 +1,20 @@
 // src/controllers/apiController.js
-const axios = require('axios');
-const ApiResponse = require('../models/ApiResponse');
-const { saveDataToDatabase } = require('../db/postgres');
-const { sendErrorMessage } = require('../services/twilioService');
+const axios = require("axios");
+const ApiResponse = require("../models/ApiResponse");
+const { saveDataToDatabase, getAllApis } = require("../db/postgres");
+const { sendErrorMessage } = require("../services/twilioService");
 
-const apiList = [
-];
+const apiList = [];
+
+// get all api list from database and save to apiList
 
 async function checkApiHealth() {
+  getAllApis().then((res) => {
+    res.forEach((api) => {
+      apiList.push(api.api);
+    });
+  }
+  );
   try {
     const responses = [];
 
@@ -34,4 +41,4 @@ async function checkApiHealth() {
     console.error("Error during API health check:", error.message);
   }
 }
-module.exports = {  checkApiHealth };
+module.exports = { checkApiHealth };

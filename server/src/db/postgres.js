@@ -29,8 +29,7 @@ async function saveDataToDatabase(data) {
     data.status,
     new Date(),
   ];
-
-  await pool.query(query, values);
+  await pool.query(query, values).then((res) => console.log(res));
 }
 
 async function getApiResponses(){
