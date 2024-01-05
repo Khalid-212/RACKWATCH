@@ -47,7 +47,7 @@ function Hero() {
               Get Started
             </button> */}
             <a
-              class="m-auto mt-10 cursor-pointer font-bold transition-all duration-[0.3s] ease-[ease] relative inline-block shadow-[inset_2px_2px_2px_0px_rgba(255,255,255,0.1),3px_3px_5px_0px_rgba(26, 35, 126, 0.3),2px_2px_3px_0px_rgba(0,0,0,0.1)] px-4 md:px-[25px] py-2.5 rounded-[5px] bg-transparent dark:text-white text-stone-900 after:absolute after:content-[''] after:w-0 after:h-full after:z-[-1] after:shadow-[-7px_-7px_20px_0px_#1a237e,-4px_-4px_5px_0px_#000,7px_7px_20px_0px_#0002,4px_4px_5px_0px_#0001] after:transition-all after:duration-[0.3s] after:ease-[ease] after:left-0 after:top-0 hover:text-black hover:after:w-full border-stone-100 dark:border-stone-700 hover:dark:text-white hover:after:left-auto hover:after:right-0 active:top-0.2 border w-max"
+              className="m-auto mt-10 cursor-pointer font-bold transition-all duration-[0.3s] ease-[ease] relative inline-block shadow-[inset_2px_2px_2px_0px_rgba(255,255,255,0.1),3px_3px_5px_0px_rgba(26, 35, 126, 0.3),2px_2px_3px_0px_rgba(0,0,0,0.1)] px-4 md:px-[25px] py-2.5 rounded-[5px] bg-transparent dark:text-white text-stone-900 after:absolute after:content-[''] after:w-0 after:h-full after:z-[-1] after:shadow-[-7px_-7px_20px_0px_#1a237e,-4px_-4px_5px_0px_#000,7px_7px_20px_0px_#0002,4px_4px_5px_0px_#0001] after:transition-all after:duration-[0.3s] after:ease-[ease] after:left-0 after:top-0 hover:text-black hover:after:w-full border-stone-100 dark:border-stone-700 hover:dark:text-white hover:after:left-auto hover:after:right-0 active:top-0.2 border w-max"
               href="/dashboard"
             >
               Get Started
