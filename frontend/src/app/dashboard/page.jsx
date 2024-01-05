@@ -9,7 +9,6 @@ import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Table from "@/components/Table";
-import { set } from "firebase/database";
 
 function Dashboard() {
   const { user, error, isLoading } = useUser();
