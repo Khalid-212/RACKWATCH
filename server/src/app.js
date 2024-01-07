@@ -1,25 +1,18 @@
-// src/app.js
 require("dotenv").config();
 
-// src/app.js
 const express = require("express");
 const bodyParser = require("body-parser");
-const {
-  fetchAndSaveData,
-  checkApiHealth,
-} = require("./controllers/apiController");
+const { checkApiHealth } = require("./controllers/apiController");
 const cors = require("cors");
 
-const { Pool } = require("pg");
 const {
-  saveUserToDatabase,
-  getApiResponsesforUser,
+  userExists,
+  addApi,
   getApiListforUser,
   getAllApis,
-  userExists,
   getApiResponses,
+  getApiResponsesForUser,
 } = require("./db/postgres");
-const { addApiToDatabase } = require("./db/postgres");
 
 const app = express();
 const port = 3232;
@@ -30,7 +23,7 @@ app.use(cors());
 checkApiHealth();
 
 // Run health checks every 5 minutes (300,000 milliseconds)
-const healthCheckInterval = 300000;
+const healthCheckInterval = 3000;
 setInterval(checkApiHealth, healthCheckInterval);
 
 app.get("/", (req, res) => {
@@ -47,19 +40,33 @@ app.post("/user", async (req, res) => {
 
 // add api to list
 app.post("/add-api", async (req, res) => {
-  const { api, api_name, email } = req.body;
-  const datatosave = {
-    api: api,
-    api_name: api_name,
-    email: email,
-  };
-  await addApiToDatabase(datatosave);
-  res.json("Api added");
+  try {
+    const { api, api_name, user_email } = req.body;
+
+    // Ensure all required fields are present
+    if (!api || !api_name || !user_email) {
+      return res
+        .status(400)
+        .json({ error: "Missing required fields: api, api_name, user_email." });
+    }
+
+    const apiData = {
+      api: api,
+      api_name: api_name,
+      user_email: user_email,
+    };
+
+    const addedApi = await addApi(apiData);
+    res.status(201).json(addedApi);
+  } catch (error) {
+    console.error("Error adding API:", error.message);
+    res.status(500).json({ error: "Internal server error." });
+  }
 });
 
 // get api list for user
 app.post("/userapis", async (req, res) => {
-  const { email } = req.body; // Use req.query to get data from query parameters
+  const { email } = req.body;
   const data = {
     email: email,
   };
@@ -72,21 +79,24 @@ app.get("/getallapis", async (req, res) => {
   res.json(apis);
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
 app.get("/all-responses", async (req, res) => {
   const apiResponses = await getApiResponses();
   res.json(apiResponses);
 });
 
 app.post("/user-api-responses", async (req, res) => {
-  const { email } = req.body; // Use req.query to get data from query parameters
+  const { email } = req.body;
   const data = {
     email: email,
   };
-  const apiResponses = await getApiResponsesforUser(data);
+  const apiResponses = await getApiResponsesForUser(data);
   res.json(apiResponses);
 });
-app.get("all-api-responses", async (req, res) => {});
+
+app.get("/all-api-responses", async (req, res) => {
+  // Your code for handling all API responses
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

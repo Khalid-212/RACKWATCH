@@ -1,4 +1,3 @@
-// src/db/postgres.js
 require("dotenv").config();
 const { Pool } = require("pg");
 
@@ -9,7 +8,7 @@ const pool = new Pool({
   port: process.env.POSTGRES_PORT,
   database: process.env.POSTGRES_DB,
   ssl: {
-    rejectUnauthorized: false, // Use this if Render requires it, but be cautious with this option
+    rejectUnauthorized: false,
   },
 });
 
@@ -21,18 +20,27 @@ pool
   );
 
 async function saveDataToDatabase(data) {
+  console.log(data)
   const query =
-    "INSERT INTO api_responses (api, response, status, timestamp) VALUES ($1, $2, $3, $4)";
+    "INSERT INTO api_responses (api, response, status, timestamp, api_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)";
   const values = [
     data.api,
     JSON.stringify(data.response),
     data.status,
     new Date(),
+    data.api_id,
+    data.user_id,
   ];
-  await pool.query(query, values).then((res) => console.log(res));
+
+  try {
+    const res = await pool.query(query, values);
+    console.log(res);
+  } catch (error) {
+    console.error("Error saving data to the database:", error.message);
+  }
 }
 
-async function getApiResponses(){
+async function getApiResponses() {
   const query = "SELECT * FROM api_responses";
   const values = [];
   const { rows } = await pool.query(query, values);
@@ -46,43 +54,70 @@ async function getAllApis() {
   return rows;
 }
 
-async function getApiResponsesforUser(user) {
-  const query = "SELECT * FROM api_responses WHERE user_id = $1";
-  const values = [user.email];
+async function getApiResponsesForUser(user_email) {
+  const query = `
+    SELECT ar.id, ar.api, ar.response, ar.status, ar.timestamp
+    FROM api_responses ar
+    JOIN users u ON ar.user_id = u.id
+    WHERE u.email = $1;
+  `;
+  const values = [user_email];
+
+  const result = await pool.query(query, values);
+  return result.rows;
 }
 
 async function userExists(user) {
   const query = "SELECT * FROM users WHERE email = $1";
   const values = [user];
-  const { rows } = await pool.query(query, values);
-  console.log(rows)
-  if (rows.length > 0) {
-    return "user exists";
-  } else {
-    saveUserToDatabase(user);
+
+  try {
+    const { rows } = await pool.query(query, values);
+
+    if (rows.length > 0) {
+      return "User exists";
+    } else {
+      await saveUserToDatabase(user);
+      return "User added";
+    }
+  } catch (error) {
+    console.error("Error checking user existence:", error.message);
+    throw error; // Rethrow the error for handling in the calling code
   }
 }
 
 async function saveUserToDatabase(user) {
   const query = "INSERT INTO users (email) VALUES ($1)";
   const values = [user];
-  const {rows} = await pool.query(query, values);
-  console.log(rows)
-  return "user added";
+
+  try {
+    await pool.query(query, values);
+    console.log("User added to the database:", user);
+  } catch (error) {
+    console.error("Error adding user to the database:", error.message);
+    throw error; // Rethrow the error for handling in the calling code
+  }
 }
 
+async function addApi(apiData) {
+  const query =
+    "INSERT INTO apis (api, api_name, user_email) VALUES ($1, $2, $3) RETURNING *";
+  const values = [apiData.api, apiData.api_name, apiData.user_email];
 
-async function addApiToDatabase(data) {
-  const query = "INSERT INTO apis (api,api_name,email) VALUES ($1,$2,$3)";
-  const values = [data.api, data.api_name, data.email];
-  await pool.query(query, values);
+  try {
+    const result = await pool.query(query, values);
+    return result.rows[0]; // Return the inserted API
+  } catch (error) {
+    console.error("Error adding API to the database:", error.message);
+    throw error; // Rethrow the error for handling in the calling code
+  }
 }
 
 async function getApiListforUser(user) {
   const query = "SELECT * FROM apis WHERE email = $1";
   const values = [user.email];
   const { rows } = await pool.query(query, values);
-  console.log(user.email)
+  console.log(user.email);
   console.log(rows);
   return rows;
 }
@@ -91,8 +126,8 @@ module.exports = {
   saveDataToDatabase,
   getApiResponses,
   saveUserToDatabase,
-  getApiResponsesforUser,
-  addApiToDatabase,
+  getApiResponsesForUser,
+  addApi,
   getApiListforUser,
   getAllApis,
   userExists,
