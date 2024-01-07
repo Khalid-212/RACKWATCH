@@ -13,7 +13,7 @@ import Table from "@/components/Table";
 function Dashboard() {
   const { user, error, isLoading } = useUser();
   const email = user?.email;
-  console.log(email);
+  // console.log(email);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toggleModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -21,11 +21,13 @@ function Dashboard() {
   // get user apis
   const [apis, setApis] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3232/apis", {
-        method: "GET",
+      const api = process.env.NEXT_PUBLIC_API_URL;
+      const res = await fetch(`${api}/userapis`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,15 +38,16 @@ function Dashboard() {
       const json = await res.json();
       setApis(json);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setLoading(false);
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
-  console.log("data");
-  console.log(apis);
+  }, [email]);
+  // console.log("data");
+  // console.log(apis);
 
   if (isLoading)
     return (
@@ -66,7 +69,7 @@ function Dashboard() {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );
@@ -97,19 +100,27 @@ function Dashboard() {
             <div></div>
           </div>
           <div className="flex justify-between flex-wrap w-full">
-            {apis.length > 0 ? (
-              apis.map((item) => (
-                <Card
-                  key={item.id}
-                  link={item.api}
-                  name={item.api_name}
-                  status={item.status}
-                />
-              ))
-            ) : (
+            {loading ? (
               <div className="flex justify-center items-center w-full h-96">
-                <h1 className="text-2xl font-bold">No APIs added yet!</h1>
+                <h1 className="text-2xl font-bold">Loading...</h1>
               </div>
+            ) : (
+              <>
+                {apis.length > 0 ? (
+                  apis.map((item) => (
+                    <Card
+                      key={item.id}
+                      link={item.api}
+                      name={item.api_name}
+                      status={item.status}
+                    />
+                  ))
+                ) : (
+                  <div className="flex justify-center items-center w-full h-96">
+                    <h1 className="text-2xl font-bold">No APIs added yet!</h1>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
