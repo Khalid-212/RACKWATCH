@@ -29,7 +29,7 @@ function Header({ image }) {
           {user ? (
             <div className="flex">
               <Link
-                className="btn-header mr-2 m-auto cursor-pointer font-bold px-4 md:px-[25px] py-2.5 rounded-xl bg-transparent dark:text-white text-stone-900  border-stone-100 dark:border-stone-700 hover:dark:text-white  border w-max"
+                className="btn-header mr-2 m-auto cursor-pointer font-bold px-4 md:px-[25px] py-2.5 rounded-xl bg-transparent dark:text-white text-stone-900  border-stone-100 dark:border-stone-700 hover:dark:text-white  border w-max hover:bg-stone-100 dark:hover:bg-stone-700"
                 href="/api/auth/logout"
               >
                 Logout
@@ -47,9 +47,7 @@ function Header({ image }) {
             </div>
           ) : (
             <Link href="/api/auth/login">
-              <button
-                className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
-              >
+              <button className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
                 Login
               </button>
             </Link>

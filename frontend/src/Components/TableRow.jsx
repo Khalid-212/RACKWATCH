@@ -12,7 +12,7 @@ function TableRow({ name, link, status, timeStamp }) {
             <div className="text-base font-semibold truncate">{name}</div>
           </div>
         </th>
-        <td className="px-6 py-4">{link}</td>
+        <td className="px-6 py-4 truncate text-ellipsis">{link}</td>
         <td className="px-6 py-4">
           <div className="flex items-center">
             <div

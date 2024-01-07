@@ -91,6 +91,7 @@ async function addApi(apiData) {
   const query =
     "INSERT INTO apis (api, api_name, user_email) VALUES ($1, $2, $3) RETURNING *";
   const values = [apiData.api, apiData.api_name, apiData.user_email];
+  console.log(values)
 
   try {
     const result = await pool.query(query, values);

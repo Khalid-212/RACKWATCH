@@ -75,3 +75,7 @@ body {
   margin-right: -50%;
   transform: translate(-50%, -50%)
 }
+
+.modal{
+  margin-bottom: 10rem;
+}
