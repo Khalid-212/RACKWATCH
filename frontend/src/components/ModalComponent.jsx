@@ -26,7 +26,7 @@ function ModalComponent() {
         body: JSON.stringify({
           api: apiUrl,
           api_name: apiName,
-          email: email,
+          user_email: email,
         }),
       });
       console.log(res.status);
@@ -44,7 +44,7 @@ function ModalComponent() {
 
   return (
     <>
-      <div className="modal flex  w-max justify-center p-4 text-center sm:items-center sm:p-0">
+      <div className="modal flex w-max justify-center p-4 text-center sm:items-center sm:p-0">
         <div className="bg-black rounded-lg h-max p-20">
           {/* form */}
           <h1 className="text-2xl font-bold">Add Api</h1>
@@ -80,7 +80,7 @@ function ModalComponent() {
             <div className="flex justify-center gap-4 mt-6">
               <input
                 type="submit"
-                className="bg-white text-black px-4 py-2 rounded-md"
+                className="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 cursor-pointer"
               />
             </div>
           </form>
