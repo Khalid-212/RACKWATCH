@@ -23,7 +23,7 @@ app.use(cors());
 checkApiHealth();
 
 // Run health checks every 5 minutes (300,000 milliseconds)
-const healthCheckInterval = 300000;
+const healthCheckInterval = 3000;
 setInterval(checkApiHealth, healthCheckInterval);
 
 app.get("/", (req, res) => {

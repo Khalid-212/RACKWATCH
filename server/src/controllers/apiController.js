@@ -11,7 +11,7 @@ async function getAllApisList() {
       api_id: api.id,
       api: api.api,
       api_name: api.api_name,
-      user_id: api.email,
+      user_id: api.user_email,
     }));
   } catch (error) {
     console.error("Error fetching API list from the database:", error.message);
@@ -34,8 +34,9 @@ async function checkApiHealth() {
             response: response.data,
             status: response.status,
             api_id: api.api_id,
-            user_id: api.email,
+            user_id: api.user_id,
           });
+          console.log("data email is: "+dataToSave.user_id)
 
           await saveDataToDatabase(dataToSave);
 

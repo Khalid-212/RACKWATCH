@@ -20,7 +20,6 @@ pool
   );
 
 async function saveDataToDatabase(data) {
-  console.log(data)
   const query =
     "INSERT INTO api_responses (api, response, status, timestamp, api_id, user_id) VALUES ($1, $2, $3, $4, $5, $6)";
   const values = [
@@ -31,6 +30,8 @@ async function saveDataToDatabase(data) {
     data.api_id,
     data.user_id,
   ];
+  console.log("values")
+  console.log(values)
 
   try {
     const res = await pool.query(query, values);
@@ -59,7 +60,7 @@ async function getApiResponsesForUser(user_email) {
     SELECT ar.id, ar.api, ar.response, ar.status, ar.timestamp
     FROM api_responses ar
     JOIN users u ON ar.user_id = u.id
-    WHERE u.email = $1;
+    WHERE u.user_email = $1;
   `;
   const values = [user_email];
 
@@ -114,7 +115,7 @@ async function addApi(apiData) {
 }
 
 async function getApiListforUser(user) {
-  const query = "SELECT * FROM apis WHERE email = $1";
+  const query = "SELECT * FROM apis WHERE user_email = $1";
   const values = [user.email];
   const { rows } = await pool.query(query, values);
   console.log(user.email);
