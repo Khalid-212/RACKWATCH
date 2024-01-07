@@ -65,14 +65,6 @@ app.post("/add-api", async (req, res) => {
 });
 
 // get api list for user
-app.post("/userapis", async (req, res) => {
-  const { email } = req.body;
-  const data = {
-    email: email,
-  };
-  const apis = await getApiListforUser(data);
-  res.json(apis);
-});
 
 app.get("/getallapis", async (req, res) => {
   const apis = await getAllApis();
@@ -91,6 +83,15 @@ app.post("/user-api-responses", async (req, res) => {
   };
   const apiResponses = await getApiResponsesForUser(data);
   res.json(apiResponses);
+});
+
+app.post("/userapis", async (req, res) => {
+  const { email } = req.body;
+  const data = {
+    email: email,
+  };
+  const apis = await getApiListforUser(data);
+  res.json(apis);
 });
 
 app.get("/all-api-responses", async (req, res) => {

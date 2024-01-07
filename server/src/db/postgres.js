@@ -55,19 +55,6 @@ async function getAllApis() {
   return rows;
 }
 
-async function getApiResponsesForUser(user_email) {
-  const query = `
-    SELECT ar.id, ar.api, ar.response, ar.status, ar.timestamp
-    FROM api_responses ar
-    JOIN users u ON ar.user_id = u.id
-    WHERE u.user_email = $1;
-  `;
-  const values = [user_email];
-
-  const result = await pool.query(query, values);
-  return result.rows;
-}
-
 async function userExists(user) {
   const query = "SELECT * FROM users WHERE email = $1";
   const values = [user];
@@ -119,7 +106,15 @@ async function getApiListforUser(user) {
   const values = [user.email];
   const { rows } = await pool.query(query, values);
   console.log(user.email);
-  console.log(rows);
+  // console.log(rows);
+  return rows;
+}
+
+async function getApiResponsesForUser(user_email) {
+  const query = "SELECT * FROM api_responses WHERE user_id = $1";
+  const values = [user_email.email];
+  const {rows}= await pool.query(query, values);
+  console.log(values)
   return rows;
 }
 
