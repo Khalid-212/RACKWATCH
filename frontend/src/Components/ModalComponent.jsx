@@ -17,7 +17,8 @@ function ModalComponent() {
     e.preventDefault();
     setLoadingApi(true);
     try {
-      const res = await fetch("http://localhost:3232/add-api", {
+      const api = process.env.NEXT_PUBLIC_API_URL;
+      const res = await fetch(api + "/add-api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
