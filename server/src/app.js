@@ -58,7 +58,7 @@ app.post("/add-api", async (req, res) => {
 });
 
 // get api list for user
-app.get("/apis", async (req, res) => {
+app.post("/userapis", async (req, res) => {
   const { email } = req.body; // Use req.query to get data from query parameters
   const data = {
     email: email,
