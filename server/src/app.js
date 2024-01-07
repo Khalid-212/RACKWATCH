@@ -81,7 +81,7 @@ app.get("/all-responses", async (req, res) => {
   res.json(apiResponses);
 });
 
-app.get("/api-responses", async (req, res) => {
+app.post("/user-api-responses", async (req, res) => {
   const { email } = req.body; // Use req.query to get data from query parameters
   const data = {
     email: email,
